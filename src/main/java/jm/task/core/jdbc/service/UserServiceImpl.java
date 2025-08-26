@@ -1,7 +1,7 @@
 package jm.task.core.jdbc.service;
 
 import jm.task.core.jdbc.dao.UserDao;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.sql.SQLException;
@@ -15,30 +15,60 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserServiceImpl() {
-        this.userDao = new UserDaoJDBCImpl();
+        this.userDao = new UserDaoHibernateImpl();
     }
 
+    @Override
     public void createUsersTable() throws SQLException {
-        userDao.createUsersTable();
+        try {
+            userDao.createUsersTable();
+        } catch (Exception e) {
+            throw new SQLException("Error creating users table", e);
+        }
     }
 
+    @Override
     public void dropUsersTable() throws SQLException {
-        userDao.dropUsersTable();
+        try {
+            userDao.dropUsersTable();
+        } catch (Exception e) {
+            throw new SQLException("Error dropping users table", e);
+        }
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) throws SQLException {
-        userDao.saveUser(name, lastName, age);
+        try {
+            userDao.saveUser(name, lastName, age);
+        } catch (Exception e) {
+            throw new SQLException("Error saving user", e);
+        }
     }
 
+    @Override
     public void removeUserById(long id) throws SQLException {
-        userDao.removeUserById(id);
+        try {
+            userDao.removeUserById(id);
+        } catch (Exception e) {
+            throw new SQLException("Error removing user by id", e);
+        }
     }
 
+    @Override
     public List<User> getAllUsers() throws SQLException {
-        return userDao.getAllUsers();
+        try {
+            return userDao.getAllUsers();
+        } catch (Exception e) {
+            throw new SQLException("Error getting all users", e);
+        }
     }
 
+    @Override
     public void cleanUsersTable() throws SQLException {
-        userDao.cleanUsersTable();
+        try {
+            userDao.cleanUsersTable();
+        } catch (Exception e) {
+            throw new SQLException("Error cleaning users table", e);
+        }
     }
 }
