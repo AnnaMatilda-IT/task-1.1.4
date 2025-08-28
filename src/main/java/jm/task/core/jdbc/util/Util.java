@@ -1,6 +1,7 @@
 package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -66,8 +67,13 @@ public class Util {
 
     // Метод для закрытия SessionFactory
     public static void shutdown() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
+        try {
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Session shutdown failed");
         }
     }
 }
